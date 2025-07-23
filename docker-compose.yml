@@ -11,6 +11,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    restart: unless-stopped
 
   backend:
     build:
@@ -23,17 +24,19 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/personal_finance
       JWT_SECRET: super_secret_123
+    restart: unless-stopped
 
   frontend:
     build:
       context: ./client
       dockerfile: Dockerfile.client
     ports:
-      - "5173:5173"
+      - "3000:3000"
     depends_on:
       - backend
     environment:
-      VITE_API_URL: http://localhost:5000
+      VITE_API_URL: http://backend:5000
+    restart: unless-stopped
 
 volumes:
   postgres-data:
