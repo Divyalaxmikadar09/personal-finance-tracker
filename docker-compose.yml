@@ -18,7 +18,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.server
     ports:
-      - "5000:5000"
+      - "5001:5000"  # ✅ Fixed this line
     depends_on:
       - db
     environment:
